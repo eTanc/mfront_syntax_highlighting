@@ -3,6 +3,7 @@
 # See http://www.sublimetext.com/docs/3/syntax.html
 file_extensions:
   - mfront
+  - mtest
 scope: source.c++
 variables:
   identifier: \b[[:alpha:]_][[:alnum:]_]*\b # upper and lowercase
@@ -20,6 +21,13 @@ contexts:
       scope: punctuation.definition.comment.c++
       push: line_comment
 
+    - match: '/\*'
+      scope: punctuation.definition.comment.c
+      push: 
+        - meta_scope: comment.block.c
+        - match: '\*/'
+          pop: true
+
     # Keywords are if, else for and while.
     # Note that blackslashes don't need to be escaped within single quoted
     # strings in YAML. When using single quoted strings, only single quotes
@@ -27,11 +35,13 @@ contexts:
     # other.
     - match: '\b(if|else|for|while)\b'
       scope: support.function
-      
+
     - match: '\b(i|j|k)\b'
-      scope: 
+      scope:
+
     - match: '\b(CONSISTENTTANGENTOPERATOR|ELASTIC|SECANTOPERATOR)\b'
       scope: storage.type.function
+
     # Numbers
     - match: '\b(-)?[0-9.e]+\b'
       scope: constant.numeric.c++
